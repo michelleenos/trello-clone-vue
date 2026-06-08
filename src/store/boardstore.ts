@@ -137,7 +137,7 @@ export const useBoardStore = defineStore('boards', () => {
     boardId: string,
     listId: string,
     posToMoveFrom: number,
-    posToMoveTo: number
+    posToMoveTo: number,
   ) => {
     let board = boards.value[boardId]
     let list = board.lists[listId]
@@ -166,7 +166,7 @@ export const useBoardStore = defineStore('boards', () => {
     oldListId: string,
     newListId: string,
     posToMoveFrom: number,
-    posToMoveTo: number
+    posToMoveTo: number,
   ) => {
     let board = boards.value[boardId]
     let oldList = board.lists[oldListId]
@@ -260,10 +260,13 @@ export const useBoardStore = defineStore('boards', () => {
 
   if (Object.keys(boards.value ?? {}).length === 0) {
     let id = newBoard('1', 'My First Board')
-    if (id instanceof Error) return console.error(id)
-    addListToBoard(id, 'To Do')
-    addListToBoard(id, 'Doing')
-    addListToBoard(id, 'Done')
+    if (id instanceof Error) {
+      console.error(id)
+    } else {
+      addListToBoard(id, 'To Do')
+      addListToBoard(id, 'Doing')
+      addListToBoard(id, 'Done')
+    }
   }
 
   return {
