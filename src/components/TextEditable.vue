@@ -106,7 +106,7 @@ const onBlur = (e: FocusEvent) => {
 .editable-edit,
 .edited-sizer {
   @apply lh-snug! w-full text-size-inherit! relative;
-  @apply py1 pr6 px1 border-1 border-solid border-transparent;
+  @apply py1 pr6  border-1 border-solid border-transparent;
 }
 
 .editable-text {

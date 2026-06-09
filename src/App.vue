@@ -4,19 +4,21 @@ import BottomBarInfo from './components/BottomBarInfo.vue'
 </script>
 
 <template>
-  <div class="page-container">
-    <top-bar></top-bar>
-    <router-view></router-view>
+  <div
+    class="h-screen max-h-screen max-w-full relative grid grid-rows-[auto_1fr_auto] grid-cols-[100%]">
+    <TopBar></TopBar>
+    <div class="bg z--1 absolute w-full h-full top-0 left-0"></div>
+    <RouterView></RouterView>
     <BottomBarInfo />
   </div>
 </template>
 
 <style scoped>
-.page-container {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 100%;
-  /* grid-template-rows: auto 1fr; */
-  padding-top: var(--topbar-height);
+.bg {
+  background-image: radial-gradient(
+    at 100% 100%,
+    hsla(from var(--brand) h s l / 0.5),
+    #ededed 100%
+  );
 }
 </style>

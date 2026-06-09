@@ -34,12 +34,17 @@ function dragStart(e: DragEvent) {
   emit('dragListStart')
 }
 
-function dragEnd() {
+function dragEnd(e: DragEvent) {
   isDragging.value = false
+  const target = e.target
+  if (target instanceof HTMLElement) {
+    target.parentElement?.classList.remove('dragging-list')
+  }
   emit('dragListEnd')
 }
 
 function dragLeave(e: DragEvent) {
+  console.log('dragLeave')
   if (isDragging.value) {
     let target = e.currentTarget
     if (target instanceof HTMLElement) {
@@ -49,7 +54,6 @@ function dragLeave(e: DragEvent) {
 }
 
 function drop(e: DragEvent) {
-  console.log('list drop', e)
   if (!isDragging.value) return
 
   let target = e.currentTarget
@@ -75,14 +79,14 @@ function drop(e: DragEvent) {
 <template>
   <div
     v-for="(id, i) in listOrder"
-    class="list-outer"
+    class="relative mx-a w-69 rounded-md"
     :key="id"
     :data-pos="i"
     @dragover="dragOver"
     @dragleave="dragLeave"
     @drop="drop">
     <div
-      class="list-inner"
+      class="list-inner cursor-grab"
       draggable="true"
       :id="`list-${id}`"
       :data-pos="i"
@@ -95,16 +99,11 @@ function drop(e: DragEvent) {
 </template>
 
 <style scoped>
-.list-outer {
-  @apply relative mx-a w-69;
+.dragging-list {
+  @apply shadow-sm bg-(light-8 op-20);
 }
-
-.list-inner {
-  @apply bg-slate-2;
-}
-
 .drag-over {
   /* outline: 3px dashed green; */
-  @apply outline-emerald outline-dashed outline-3 bg-emerald-2 bg-opacity-10;
+  @apply outline-brand outline-dashed outline-3 bg-brand-light bg-opacity-50;
 }
 </style>

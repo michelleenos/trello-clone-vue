@@ -29,7 +29,7 @@ const focus = () => {
 defineExpose({ focus })
 
 const className = computed(
-  () => `btn btn-style-${props.color} btn-size-${props.size} btn-shape-${props.shape}`
+  () => `btn btn-style-${props.color} btn-size-${props.size} btn-shape-${props.shape}`,
 )
 const ariaLabel = computed(() => props.label ?? undefined)
 
@@ -87,7 +87,7 @@ const iconNode = props.icon ? h('div', { class: `i-carbon:${iconName}` }) : fals
 }
 
 .btn.btn-style-primary {
-  @apply bg-cyan-7 text-slate-1 hover:bg-cyan-6 focus:bg-cyan-6;
+  @apply bg-brand text-slate-1 hover:bg-brand-hover focus:bg-brand-hover;
   @apply lh-none font-500 rounded-none transition-all;
 }
 

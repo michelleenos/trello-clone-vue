@@ -24,42 +24,51 @@ const userName = computed(() => userStore.name)
 
 <template>
   <router-view :boardId="id"></router-view>
-  <PageWrap :title="board.name" v-if="board">
-    <template #title>
-      <BoardTitle :boardId="id" :userName="userName" :boardTitle="board.name" />
-    </template>
-    <Lists
-      v-if="board?.lists"
-      :lists="board.lists"
-      :listOrder="board.listOrder"
-      @dragListStart="isDraggingList = true"
-      @dragListEnd="isDraggingList = false"
-      @moveList="(posToMoveFrom: string, posToMoveTo: string) => boardStore.moveList(id, +posToMoveFrom, +posToMoveTo)">
-      <template #listItem="{ listId, i }">
-        <List
-          :boardId="id"
-          :listId="listId"
-          :pos="i"
-          :isDraggingCard="isDraggingCard"
-          @dragCardStart="isDraggingCard = true"
-          @dragCardEnd="isDraggingCard = false" />
-      </template>
-      <template #lastCol>
-        <InputForm
-          class="self-start"
-          ref="newListForm"
-          placeholder="list title"
-          :toggleable="true"
-          inputId="new-list"
-          labelSubmit="create"
-          labelCancel="cancel"
-          @submit="(newListTitle) => boardStore.addListToBoard(id, newListTitle)">
-          <template #toggle>
-            <div i-carbon:add class="mr1"></div>
-            add list
-          </template>
-        </InputForm>
-      </template>
-    </Lists>
-  </PageWrap>
+  <div class="max-w-full relative w-full grid grid-rows-[auto_1fr] grid-cols-[100%]">
+    <div class="content-wrap max-w-full relative w-full">
+      <BoardTitle class="mb-8 mt-8" :boardId="id" :userName="userName" :boardTitle="board.name" />
+    </div>
+    <div class="content-wrap max-w-full relative w-full h-full">
+      <div class="w-full relative overflow-x-auto h-full">
+        <div class="grid grid-flow-col h-full pt-2 gap-x-4">
+          <Lists
+            v-if="board?.lists"
+            :lists="board.lists"
+            :listOrder="board.listOrder"
+            @dragListStart="isDraggingList = true"
+            @dragListEnd="isDraggingList = false"
+            @moveList="
+              (posToMoveFrom: string, posToMoveTo: string) =>
+                boardStore.moveList(id, +posToMoveFrom, +posToMoveTo)
+            ">
+            <template #listItem="{ listId, i }">
+              <List
+                :boardId="id"
+                :listId="listId"
+                :pos="i"
+                :isDraggingCard="isDraggingCard"
+                @dragCardStart="isDraggingCard = true"
+                @dragCardEnd="isDraggingCard = false" />
+            </template>
+            <template #lastCol>
+              <InputForm
+                class="self-start w-69"
+                ref="newListForm"
+                placeholder="list title"
+                :toggleable="true"
+                inputId="new-list"
+                labelSubmit="create"
+                labelCancel="cancel"
+                @submit="(newListTitle) => boardStore.addListToBoard(id, newListTitle)">
+                <template #toggle>
+                  <div i-carbon:add class="mr1"></div>
+                  add list
+                </template>
+              </InputForm>
+            </template>
+          </Lists>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

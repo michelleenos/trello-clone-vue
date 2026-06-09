@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
-export interface props {
+export interface ClickyBoxProps {
   linkTo?: string
   color?: 'dark' | 'light'
   size?: 'lg' | 'sm'
 }
 
-const props = withDefaults(defineProps<props>(), {
+const props = withDefaults(defineProps<ClickyBoxProps>(), {
   color: 'dark',
   size: 'lg',
 })
@@ -27,30 +27,30 @@ defineExpose({
 </script>
 
 <template>
-  <router-link v-if="linkTo" :to="linkTo" :class="className" ref="el">
+  <router-link v-if="linkTo" ref="el" :to="linkTo" :class="className">
     <slot></slot>
   </router-link>
-  <button v-else :class="className" ref="el">
+  <button v-else ref="el" :class="className">
     <slot></slot>
   </button>
 </template>
 
-<style scoped>
+<style>
 .clicky-box {
-  @apply block p-2 rounded-sm flex items-center w-full font-500;
+  @apply block rounded-xl items-center w-full border-1 border-light-9;
 }
 
 .clicky-box.lg {
-  @apply min-h-30 items-end p-4;
+  @apply min-h-30 items-end;
 }
 
 .clicky-box.dark {
-  @apply bg-slate-9 bg-opacity-90 text-gray-1;
+  /* @apply bg-slate-9 bg-opacity-90 text-gray-1; */
 }
 
-.clicky-box.light {
+/* .clicky-box.light {
   @apply bg-slate-3 bg-opacity-90;
-}
+} */
 
 .clicky-box:hover,
 .clicky-box:focus {

@@ -89,31 +89,25 @@ function drop(e: DragEvent) {
 
   if (listId !== props.listId) {
     moveCardBetweenLists(props.boardId, listId, props.listId, +posToMoveFrom, +posToMoveTo)
-    console.log('moved card bw lists')
+    // console.log('moved card bw lists')
   } else {
     moveCardWithinList(props.boardId, props.listId, +posToMoveFrom, +posToMoveTo)
-    console.log('moved card within lists')
+    // console.log('moved card within lists')
   }
 }
 </script>
 
 <template>
   <div class="list" v-if="list">
-    <div class="list-title">
+    <div class="text-md font-500 flex justify-between items-center;">
       <TextEditable
         :text="list.title"
         @updateText="updateTitle"
         @dragover="dragOver"
         @drop="drop"
-        class="list-title-editable"
+        class="my-1"
         :data-pos="0" />
-      <!-- <Button
-        icon="delete"
-        @click="deleteList"
-        color="flat-dark"
-        size="xs"
-        label="Delete List"
-        :showText="false" /> -->
+
       <DeleteWithConfirm
         label="delete list"
         @delete="deleteList"
@@ -124,7 +118,7 @@ function drop(e: DragEvent) {
         :confirmMessage="`Do you really want to delete the list '${list.title}'? All cards on the list will be deleted as well.`" />
     </div>
 
-    <div class="card-items">
+    <div class="relative p-2 z-2 bg-(light-1 op-50) backdrop-blur-xl border-(1 slate-2) rounded-sm">
       <div
         v-for="(cardId, i) in list.cardIds"
         class="card-outer"
@@ -134,7 +128,7 @@ function drop(e: DragEvent) {
         @dragleave="dragLeave"
         @drop="drop">
         <Card
-          class="card-item"
+          class="card-item mb-2"
           :cardId="cardId"
           :boardId="list.boardId"
           :id="`card-${cardId}`"
@@ -144,48 +138,28 @@ function drop(e: DragEvent) {
           @dragstart="dragStart"
           @dragend="dragEnd" />
       </div>
-    </div>
 
-    <InputForm
-      inputId="newcardform"
-      :toggleable="true"
-      placeholder="card title"
-      labelSubmit="create"
-      labelCancel="cancel"
-      :data-pos="list.cardIds.length"
-      @dragover="dragOver"
-      @drop="drop"
-      @submit="(newCardName) => addCardToBoard(list.boardId, list.id, newCardName)">
-      <template #toggle>
-        <div i-carbon:add class="mr1"></div>
-        add card
-      </template>
-    </InputForm>
+      <InputForm
+        inputId="newcardform"
+        :toggleable="true"
+        placeholder="card title"
+        labelSubmit="create"
+        labelCancel="cancel"
+        :data-pos="list.cardIds.length"
+        @dragover="dragOver"
+        @drop="drop"
+        @submit="(newCardName) => addCardToBoard(list.boardId, list.id, newCardName)">
+        <template #toggle>
+          <span class="mr1 i-carbon:add text-lg"></span>
+          <span>add card</span>
+        </template>
+      </InputForm>
+    </div>
   </div>
 </template>
 
 <style scoped lang="css">
-.card-outer {
-  @apply py-1 px-2;
-}
-
-.card-item {
-  @apply outline-2 outline-blue;
-}
-
 .card-outer.drag-card-over .card-item {
-  outline-style: solid;
-}
-
-.card-items {
-  @apply relative z2 pb-2;
-}
-
-.list-title {
-  @apply text-lg px2 flex justify-between items-center;
-}
-
-.list-title-editable {
-  @apply flex-1 my-1;
+  @apply outline outline-(dashed brand 2);
 }
 </style>

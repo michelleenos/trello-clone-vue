@@ -20,20 +20,22 @@ const profileBtn = () => {
 </script>
 
 <template>
-  <div class="topbar">
-    <div class="topbar-inner">
-      <Button linkTo="/" label="TRELLO CLONE" size="md" shape="rounded" />
+  <div class="w-full bg-light-5 bg-op-50 backdrop-blur-2xl z-99 h-14" v-bind="$attrs">
+    <div class="content-wrap flex items-center justify-between h-full">
+      <RouterLink class="font-medium inline-flex gap-2" to="/">
+        <span
+          class="inline-block bg-gradient-from-brandPink bg-gradient-to-brand w-5 h-5 bg-gradient-radial bg-gradient-to-bl rounded self-center"></span>
+        <span class="inline-block lh-tight">Trello Clone</span>
+      </RouterLink>
+      <!-- <Button linkTo="/" label="TRELLO CLONE" size="md" shape="rounded" /> -->
       <!-- <router-link to="/" class="topbar-btn"> TRELLO CLONE </router-link> -->
 
-      <Button
-        label="Your Profile"
-        @click="profileBtn"
-        shape="circle"
-        :showText="false"
-        color="primary"
-        size="lg">
+      <button
+        class="border-slate-3 w-10 h-10 border-1 rounded-full text-center inline-flex items-center justify-center"
+        aria-label="Your Profile"
+        @click="profileBtn">
         <div class="i-carbon:person"></div>
-      </Button>
+      </button>
     </div>
   </div>
   <DialogShade v-if="profileOpen">
@@ -54,17 +56,11 @@ const profileBtn = () => {
   </DialogShade>
 </template>
 
-<style scoped>
-.topbar {
-  @apply w-full bg-cyan-8 fixed top-0 left-0 z-99;
-  height: 50px;
-}
-
+<style>
 .profile-btn {
   @apply rounded-full text-xl p-2;
 }
 
 .topbar-inner {
-  @apply container px-4 mx-auto flex items-center justify-between h-full relative;
 }
 </style>

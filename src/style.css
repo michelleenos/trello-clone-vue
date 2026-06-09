@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
 
 :root {
-  font-family: 'Ubuntu', sans-serif;
+  font-family: 'Parkinsans', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   font-weight: 400;
@@ -12,26 +12,28 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --topbar-height: 3.5rem;
-}
+  --topbar-height: 50px;
 
-@media (min-width: 1440px) {
-  :root {
-    font-size: 17px;
-  }
+  --brand: #401ca5;
+  --brand-hover: #32128a;
+  --brand-light: #9c8cc9;
 }
 
 body {
-  @apply text-dark-900 min-h-screen m0 text-base;
+  @apply text-ink min-h-screen m0 text-base;
 }
 
-h1 {
+.content-wrap {
+  @apply px-4 lg:px-8 w-full relative;
+}
+
+/* h1 {
   @apply text-2xl font-500 mb4;
 }
 
 h2 {
   @apply text-xl;
-}
+} */
 
 input[type='submit'],
 button {
@@ -46,7 +48,7 @@ textarea {
 
 input[type='text']:focus,
 textarea:focus {
-  @apply outline-3 outline-solid outline-transparent shadow-md shadow-slate-5 shadow-opacity-20;
+  @apply outline-3 outline-solid outline-transparent shadow-sm;
 }
 
 textarea.input {
@@ -59,16 +61,16 @@ button,
   @apply cursor-pointer;
 }
 
-a {
+/* a {
   @apply text-rose-6 hover:bg-amber-2 focus:bg-amber-2;
-}
+} */
 
-a:focus,
+/* a:focus,
 button:focus,
 input:focus,
 .btn:focus {
   @apply outline-2 outline-pink-5 outline-solid;
-}
+} */
 
 .text-error {
   @apply text-red text-xs;

@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import ClickyBox from '~/components/ClickyBox.vue'
+import { RouterLink } from 'vue-router'
 import { useBoardStore } from '~/store/boardstore'
 import { useUserStore } from '~/store/userstore'
 import InputForm from '~/components/InputForm.vue'
 import Dialog from '~/components/Dialog.vue'
 import DialogShade from '~/components/DialogShade.vue'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, useTemplateRef } from 'vue'
+import BoardCard from './BoardCard.vue'
 
-const showFormButton = ref<typeof ClickyBox | null>(null)
+const showFormButton = useTemplateRef('showFormButton')
 const showNewBoardForm = ref(false)
+const focusAfterClose = ref(false)
 
 const userStore = useUserStore()
 const boardStore = useBoardStore()
@@ -19,48 +21,45 @@ const openForm = () => {
 
 const closeForm = (focus = true) => {
   showNewBoardForm.value = false
-  focus && showFormButton.value?.el?.focus()
+  focusAfterClose.value = focus
+}
+
+const onDialogLeave = () => {
+  if (focusAfterClose.value) showFormButton.value?.focus()
 }
 
 const onCreateBoardSuccess = (newBoardId: string) => {
   closeForm(false)
   nextTick(() => {
     let newBoardEl = document.querySelector(`.clicky-box[href*="board/${newBoardId}"]`)
-    newBoardEl instanceof HTMLAnchorElement && newBoardEl.focus()
+    if (newBoardEl instanceof HTMLAnchorElement) newBoardEl.focus()
   })
 }
 </script>
 
 <template>
-  <ClickyBox
-    v-for="(board, i) in boardStore.boards"
-    :key="`board-link-${i}`"
-    :linkTo="`board/${board.id}`"
-    class="boardgrid-box">
-    {{ board.name }}
-  </ClickyBox>
+  <div class="grid gap-x-4 md:grid-cols-4 sm:grid-cols-3 xs:grid-cols-2">
+    <BoardCard
+      v-for="(board, i) in boardStore.boards"
+      :key="`board-link-${i}`"
+      :name="board.name"
+      :linkTo="`board/${board.id}`">
+    </BoardCard>
 
-  <ClickyBox @click.native="openForm" color="light" ref="showFormButton" class="boardgrid-box">
-    Create Board
-  </ClickyBox>
+    <BoardCard @click="openForm" ref="showFormButton" name="Create Board" :ghost="true"></BoardCard>
 
-  <transition name="fade">
-    <DialogShade v-if="showNewBoardForm">
-      <Dialog title="Create Board" @close="closeForm" :focusOnMount="false">
-        <InputForm
-          inputLabel="New Board Title"
-          inputId="newname"
-          :focusOnMount="true"
-          @submit="(newBoardName) => boardStore.newBoard(userStore.id, newBoardName)"
-          @submitSuccess="onCreateBoardSuccess"
-          @cancel="closeForm" />
-      </Dialog>
-    </DialogShade>
-  </transition>
+    <transition name="fade" @after-leave="onDialogLeave">
+      <DialogShade v-if="showNewBoardForm">
+        <Dialog title="Create Board" :focus-on-mount="false" @close="closeForm">
+          <InputForm
+            input-label="New Board Title"
+            input-id="newname"
+            :focus-on-mount="true"
+            @submit="(newBoardName) => boardStore.newBoard(userStore.id, newBoardName)"
+            @submit-success="onCreateBoardSuccess"
+            @cancel="closeForm" />
+        </Dialog>
+      </DialogShade>
+    </transition>
+  </div>
 </template>
-
-<style scoped>
-.boardgrid-box {
-  @apply my-2 mr-2 w-64 max-w-64;
-}
-</style>

@@ -12,13 +12,9 @@ const card = getCardById(props.boardId, props.cardId)
 </script>
 
 <template>
-  <router-link :to="{ name: 'card', params: { id: boardId, cardId: cardId } }" class="card">
+  <router-link
+    :to="{ name: 'card', params: { id: boardId, cardId: cardId } }"
+    class="block px2 py3 bg-(light-5) hover:(bg-light-2) rounded-sm">
     {{ card.title }}
   </router-link>
 </template>
-
-<style scoped>
-.card {
-  @apply block px3 py1 bg-slate-1 hover:bg-blue-2 text-slate-9;
-}
-</style>

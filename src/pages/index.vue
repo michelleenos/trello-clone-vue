@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import BoardsGrid from '~/components/BoardsGrid.vue'
-import PageWrap from '~/components/PageWrap.vue'
 </script>
 
 <template>
-  <PageWrap title="Your Boards" :rows="true">
+  <div class="content-wrap max-w-screen-lg mx-a">
+    <h1 class="text-2xl font-500 my-10">Your Boards</h1>
     <BoardsGrid />
-  </PageWrap>
+  </div>
+  <!-- <PageWrap title="Your Boards" :rows="true">
+    <BoardsGrid />
+  </PageWrap> -->
 </template>

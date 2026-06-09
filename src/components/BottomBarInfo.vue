@@ -9,7 +9,7 @@ const infoOpen = ref(false)
 </script>
 
 <template>
-  <div class="bottom-bar">
+  <div class="bg-light-5 bg-op-30 h-14 flex items-center justify-center" v-bind="$attrs">
     <Button color="flat-dark" @click="infoOpen = true">
       <div class="i-carbon:information mr1"></div>
       about
@@ -55,10 +55,6 @@ const infoOpen = ref(false)
 </template>
 
 <style scoped>
-.bottom-bar {
-  @apply w-full bg-slate-2 fixed bottom-0 left-0 h-15 z-99;
-  @apply flex items-center justify-center;
-}
 .dialog-content p {
   margin-bottom: 1rem;
 }
