@@ -27,14 +27,14 @@ const deleteBoard = () => {
 
 <template>
   <div class="board-title-wrap">
-    <div class="flex justify-between flex-wrap">
+    <div class="flex flex-wrap items-baseline justify-between">
       <div class="flex items-baseline">
-        <h1 class="text-2xl font-500 mt-5">
+        <h1 class="mt-5 text-2xl font-500">
           <TextEditable
             :text="boardTitle"
-            @updateText="updateBoardTitle"
             inputId="board-name"
-            class="font-500 max-w-500px" />
+            class="max-w-500px font-500"
+            @update-text="updateBoardTitle" />
         </h1>
         <div v-if="userName" class="text-3.5">created by {{ userName }}</div>
       </div>
@@ -42,11 +42,11 @@ const deleteBoard = () => {
       <DeleteWithConfirm
         class="ml-2"
         label="delete board"
-        @delete="deleteBoard"
         confirmTitle="delete this board"
         confirmBtnText="yes, delete"
         cancelBtnText="no, go back"
-        :confirmMessage="`Do you really want to delete the board '${boardTitle}'? All lists & cards on the board will be deleted as well.`" />
+        :confirmMessage="`Do you really want to delete the board '${boardTitle}'? All lists & cards on the board will be deleted as well.`"
+        @delete="deleteBoard" />
     </div>
   </div>
 </template>

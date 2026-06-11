@@ -1,15 +1,15 @@
 <script setup lang="ts">
 // import Button from '~/components/Button.vue'
 import { ref } from 'vue'
-import Dialog from '~/components/Dialog.vue'
+import DialogBox from '~/components/DialogBox.vue'
 import DialogShade from '~/components/DialogShade.vue'
-import Button from './Button.vue'
+import Button from './VBtn.vue'
 
 const infoOpen = ref(false)
 </script>
 
 <template>
-  <div class="bg-light-5 bg-op-30 h-14 flex items-center justify-center" v-bind="$attrs">
+  <div class="h-14 flex items-center justify-center bg-light-5 bg-op-30" v-bind="$attrs">
     <Button color="flat-dark" @click="infoOpen = true">
       <div class="i-carbon:information mr1"></div>
       about
@@ -28,8 +28,8 @@ const infoOpen = ref(false)
   </div>
 
   <DialogShade v-if="infoOpen">
-    <Dialog title="hello!" @close="infoOpen = false" class="info-dialog">
-      <div class="p4 dialog-content text-3.8">
+    <DialogBox title="hello!" class="info-dialog" @close="infoOpen = false">
+      <div class="dialog-content p4 text-3.8">
         <p>This is a clone of the popular project management app Trello built in Vue3.</p>
         <p>
           I built it to familiarize myself with the native HTML drag & drop API, practice
@@ -50,7 +50,7 @@ const infoOpen = ref(false)
           <a href="https://michelleenos.com" target="_blank">michelleenos.com</a>.
         </p>
       </div>
-    </Dialog>
+    </DialogBox>
   </DialogShade>
 </template>
 

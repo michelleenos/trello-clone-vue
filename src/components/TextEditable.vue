@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, nextTick } from 'vue'
-import Button from '~/components/Button.vue'
+import VBtn from '~/components/VBtn.vue'
 
 export interface Props {
   text: string
@@ -56,42 +56,42 @@ const onBlur = (e: FocusEvent) => {
 
 <template>
   <div :class="`editable-text-wrap ${color} ${multiline ? 'multi-line' : 'single-line'}`">
-    <div class="editable-text" v-if="!isEditing" @click="startEditing">
+    <div v-if="!isEditing" class="editable-text" @click="startEditing">
       <span v-if="text.length > 0" v-html="editedTextHtml" />
       <span v-else-if="placeholder" class="placeholder">{{ placeholder }}</span>
     </div>
     <div v-else @keyup.esc.stop="cancelEditing">
       <div v-if="multiline" class="textarea-wrap grid">
         <span
-          class="edited-sizer col-start-1 row-start-1 invisible opacity-0"
+          class="edited-sizer invisible col-start-1 row-start-1 opacity-0"
           v-html="editedTextHtml" />
         <textarea
-          class="editable-edit col-start-1 row-start-1 my-0"
           ref="input"
           v-model="editedText"
+          v-click-outside="doUpdateText"
+          class="editable-edit col-start-1 row-start-1 my-0"
           @blur="onBlur"
-          @keydown.enter.exact="doUpdateText"
-          v-click-outside="doUpdateText" />
+          @keydown.enter.exact="doUpdateText" />
       </div>
       <input
         v-else
+        ref="input"
+        v-model="editedText"
+        v-click-outside="doUpdateText"
         type="text"
         class="editable-edit"
-        v-model="editedText"
-        ref="input"
         @blur="onBlur"
-        @keyup.enter="doUpdateText"
-        v-click-outside="doUpdateText" />
-      <Button
+        @keyup.enter="doUpdateText" />
+      <VBtn
+        v-if="editedText !== text"
         ref="cancelButton"
         color="flat-dark"
         size="xs"
         class="editable-cancel"
-        @click="cancelEditing"
-        v-if="editedText !== text"
         icon="close"
         label="cancel edit title"
-        :showText="false" />
+        :showText="false"
+        @click="cancelEditing" />
       <div v-if="instructions" class="instructions">{{ instructions }}</div>
     </div>
   </div>

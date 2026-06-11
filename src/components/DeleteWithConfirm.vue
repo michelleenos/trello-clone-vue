@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { ref, nextTick, watch } from 'vue'
 import DialogShade from './DialogShade.vue'
-import Dialog from './Dialog.vue'
-import Button from './Button.vue'
+import DialogBox from './DialogBox.vue'
+import Button from './VBtn.vue'
 import FormBtns from './FormBtns.vue'
 
 export interface Props {
-  label: string
+  label?: string
   showLabel?: boolean
   confirmTitle?: string
   confirmMessage?: string
@@ -51,18 +51,18 @@ watch(show, (newVal) => {
 
 <template>
   <Button
+    ref="button"
     :label="label"
     :showText="showLabel"
-    @click="show = true"
     size="xs"
     color="flat-dark"
     icon="delete"
-    ref="button"
-    v-bind="$attrs">
+    v-bind="$attrs"
+    @click="show = true">
   </Button>
   <Teleport to="body">
     <DialogShade v-if="show">
-      <Dialog :title="confirmTitle" @close="onCancel" class="max-w-60">
+      <DialogBox :title="confirmTitle" class="max-w-60" @close="onCancel">
         <div class="p4">
           <div class="mb-3">{{ confirmMessage }}</div>
 
@@ -73,7 +73,7 @@ watch(show, (newVal) => {
             @cancel="onCancel"
             @submit="doDeletion" />
         </div>
-      </Dialog>
+      </DialogBox>
     </DialogShade>
   </Teleport>
 </template>

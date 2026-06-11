@@ -22,14 +22,11 @@ export interface Props {
   isDraggingCard: boolean
 }
 
-// TODO: drag a card over another list - card doesn't get outline style
-
 const props = defineProps<Props>()
 
 const list = computed(() => getListById(props.boardId, props.listId))
 
 const emit = defineEmits(['dragCardStart', 'dragCardEnd'])
-// const isDragging = ref(false)
 const draggingId = ref('')
 
 const updateTitle = (newTitle: string) => {
@@ -51,14 +48,12 @@ function dragStart(e: DragEvent) {
   let target = e.target
   if (!(target instanceof HTMLElement) || !target.classList.contains('card-item')) return
 
-  // isDragging.value = true
   emit('dragCardStart')
   draggingId.value = target.id
   e.dataTransfer?.setData('text/plain', target.id)
 }
 
 function dragEnd() {
-  // isDragging.value = false
   emit('dragCardEnd')
 }
 
@@ -69,8 +64,6 @@ function dragLeave(e: DragEvent) {
 }
 
 function drop(e: DragEvent) {
-  // console.log('card drop', e)
-
   let target = e.currentTarget
   if (!(target instanceof HTMLElement)) return
 
@@ -89,49 +82,47 @@ function drop(e: DragEvent) {
 
   if (listId !== props.listId) {
     moveCardBetweenLists(props.boardId, listId, props.listId, +posToMoveFrom, +posToMoveTo)
-    // console.log('moved card bw lists')
   } else {
     moveCardWithinList(props.boardId, props.listId, +posToMoveFrom, +posToMoveTo)
-    // console.log('moved card within lists')
   }
 }
 </script>
 
 <template>
-  <div class="list" v-if="list">
-    <div class="text-md font-500 flex justify-between items-center;">
+  <div v-if="list" class="list relative grid grid-rows-[min-content_1fr] h-full max-h-full">
+    <div class="text-md items-center; flex justify-between font-500">
       <TextEditable
         :text="list.title"
-        @updateText="updateTitle"
-        @dragover="dragOver"
-        @drop="drop"
         class="my-1"
-        :data-pos="0" />
+        :data-pos="0"
+        @update-text="updateTitle"
+        @dragover="dragOver"
+        @drop="drop" />
 
       <DeleteWithConfirm
         label="delete list"
-        @delete="deleteList"
         confirmTitle="delete this list"
         confirmBtnText="yes, delete"
         cancelBtnText="no, go back"
         :showLabel="false"
-        :confirmMessage="`Do you really want to delete the list '${list.title}'? All cards on the list will be deleted as well.`" />
+        :confirmMessage="`Do you really want to delete the list '${list.title}'? All cards on the list will be deleted as well.`"
+        @delete="deleteList" />
     </div>
 
-    <div class="relative p-2 z-2 bg-(light-1 op-50) backdrop-blur-xl border-(1 slate-2) rounded-sm">
+    <div class="relative z-2 py2">
       <div
         v-for="(cardId, i) in list.cardIds"
+        :key="cardId"
         class="card-outer"
         :data-pos="i"
-        :key="cardId"
         @dragover="dragOver"
         @dragleave="dragLeave"
         @drop="drop">
         <Card
+          :id="`card-${cardId}`"
           class="card-item mb-2"
           :cardId="cardId"
           :boardId="list.boardId"
-          :id="`card-${cardId}`"
           :data-pos="i"
           :data-listId="list.id"
           draggable="true"
@@ -150,7 +141,7 @@ function drop(e: DragEvent) {
         @drop="drop"
         @submit="(newCardName) => addCardToBoard(list.boardId, list.id, newCardName)">
         <template #toggle>
-          <span class="mr1 i-carbon:add text-lg"></span>
+          <span class="i-carbon:add mr1 text-lg"></span>
           <span>add card</span>
         </template>
       </InputForm>

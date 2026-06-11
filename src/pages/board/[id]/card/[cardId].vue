@@ -3,9 +3,9 @@ import { computed } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
 import { useRoute, useRouter } from 'vue-router'
 import DialogShade from '~/components/DialogShade.vue'
-import Dialog from '~/components/Dialog.vue'
+import DialogBox from '~/components/DialogBox.vue'
 import TextEditable from '~/components/TextEditable.vue'
-import Button from '~/components/Button.vue'
+import VBtn from '~/components/VBtn.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -36,26 +36,26 @@ const deleteCard = () => {
 
 <template>
   <DialogShade v-if="card">
-    <Dialog class="card" @close="goToBoard" :title="card.title">
+    <DialogBox class="card" :title="card.title" @close="goToBoard">
       <template #title>
         <TextEditable
           :text="card.title"
-          @updateText="updateTitle"
           inputId="card-title"
           placeholder="card title"
           color="dark"
-          class="mt-3 mr-4" />
+          class="mr-4 mt-3"
+          @update-text="updateTitle" />
       </template>
       <div class="card__content">
         <TextEditable
           :text="card.description"
-          @updateText="updateDescription"
           inputId="card-desc"
           :multiline="true"
           placeholder="card description"
           instructions="enter to save; shift+enter for line break"
-          class="my2 min-h-30" />
-        <Button
+          class="my2 min-h-30"
+          @update-text="updateDescription" />
+        <VBtn
           icon="delete"
           color="flat-dark"
           size="xs"
@@ -64,7 +64,7 @@ const deleteCard = () => {
           class="absolute bottom-1 right-1"
           @click="deleteCard" />
       </div>
-    </Dialog>
+    </DialogBox>
   </DialogShade>
 </template>
 

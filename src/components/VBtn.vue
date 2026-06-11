@@ -38,7 +38,7 @@ const iconNode = props.icon ? h('div', { class: `i-carbon:${iconName}` }) : fals
 </script>
 
 <template>
-  <a v-if="linkTo && externalLink" :href="linkTo" target="_blank" ref="el" :class="className">
+  <a v-if="linkTo && externalLink" ref="el" :href="linkTo" target="_blank" :class="className">
     <slot>
       <iconNode v-if="iconNode" />
       <div v-if="label && showText && iconNode" class="btn-spacer"></div>
@@ -52,7 +52,7 @@ const iconNode = props.icon ? h('div', { class: `i-carbon:${iconName}` }) : fals
       <div v-if="label && showText" class="btn-label">{{ label }}</div>
     </slot>
   </router-link>
-  <button v-else :class="className" :aria-label="ariaLabel ?? ''" ref="el">
+  <button v-else ref="el" :class="className" :aria-label="ariaLabel ?? ''">
     <slot>
       <iconNode v-if="iconNode" />
       <div v-if="label && showText && iconNode" class="btn-spacer"></div>

@@ -14,13 +14,6 @@ export default tseslint.config(
   prettier,
   {
     languageOptions: {
-      rules: {
-        'vue/attribute-hyphenation': 'never',
-      },
-    },
-  },
-  {
-    languageOptions: {
       globals: {
         ...globals.browser,
         ...globals.es2021,
@@ -40,6 +33,15 @@ export default tseslint.config(
       parserOptions: {
         parser: tseslint.parser,
       },
+    },
+    rules: {
+      'vue/attribute-hyphenation': 'off',
+    },
+  },
+  {
+    files: ['src/pages/**/*.vue'],
+    rules: {
+      'vue/multi-word-component-names': 'off',
     },
   },
   {

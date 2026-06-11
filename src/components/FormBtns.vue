@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Button from '~/components/Button.vue'
+import VBtn from '~/components/VBtn.vue'
 import { ref } from 'vue'
 
 defineProps({
@@ -7,8 +7,8 @@ defineProps({
   labelCancel: { type: String, default: 'cancel' },
 })
 
-const cancelBtn = ref<typeof Button | null>(null)
-const submitBtn = ref<typeof Button | null>(null)
+const cancelBtn = ref<typeof VBtn | null>(null)
+const submitBtn = ref<typeof VBtn | null>(null)
 const emit = defineEmits(['submit', 'cancel'])
 defineExpose({ cancelBtn, submitBtn })
 
@@ -19,21 +19,21 @@ const cancelSubmit = () => {
 
 <template>
   <div class="form-btns">
-    <Button
+    <VBtn
+      ref="cancelBtn"
       type="button"
-      @click="cancelSubmit"
       color="flat-dark"
       class="mr2"
       size="sm"
-      ref="cancelBtn"
-      :label="labelCancel" />
-    <Button
-      @click.prevent="$emit('submit')"
+      :label="labelCancel"
+      @click="cancelSubmit" />
+    <VBtn
+      ref="submitBtn"
       color="primary"
       :label="labelSubmit"
       size="sm"
-      ref="submitBtn"
-      type="submit" />
+      type="submit"
+      @click.prevent="$emit('submit')" />
   </div>
 </template>
 

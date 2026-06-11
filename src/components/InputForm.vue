@@ -1,18 +1,17 @@
 <script setup lang="ts">
 import FormBtns from '~/components/FormBtns.vue'
-import ClickyBox from '~/components/ClickyBox.vue'
 import { onMounted, ref, nextTick, useTemplateRef } from 'vue'
 
 export interface Props {
+  inputId: string
   labelSubmit?: string
   labelCancel?: string
-  inputId: string
   inputLabel?: string
   focusOnMount?: boolean
   modelValue?: string
   toggleable?: boolean
   errorMessage?: string | false
-  onSubmit: (text: string) => any
+  onSubmit: (text: string) => unknown
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -81,22 +80,26 @@ defineExpose({ show, hide })
   <div class="">
     <button
       v-if="toggleable && !shown"
-      @click="show"
       ref="toggleBtn"
-      class="w-full py-1 text-(ink sm) flex justify-center outline outline-(slate-4 dashed) rounded-sm hover:(bg-(brand-light op-10) shadow-md text-brand-hover outline-brand) transition-all">
+      :class="[
+        'w-full flex justify-center b-(1 slate-4 dashed) rounded-sm py-1 text-(sm brand) outline-(offset-1) transition-all',
+        'hover:(b-brand bg-brand bg-op10 shadow-md) focus:(outline-(2 solid brand))',
+      ]"
+      @click="show">
       <slot name="toggle">
         <span class="text-sm">show</span>
       </slot>
     </button>
 
-    <form class="" v-if="(toggleable && shown) || !toggleable" @keyup.escape="onCancel">
+    <form v-if="(toggleable && shown) || !toggleable" class="" @keyup.escape="onCancel">
+      <label v-if="inputLabel" :for="inputId">{{ inputLabel }}</label>
       <input
-        type="text"
         :id="inputId"
-        v-model="inputText"
         ref="input"
-        class="w-full text-sm mb2 py2" />
-      <div class="text-error" v-if="error">{{ error.message }}</div>
+        v-model="inputText"
+        type="text"
+        class="mb2 w-full py2 text-sm" />
+      <div v-if="error" class="text-error">{{ error.message }}</div>
       <FormBtns
         :labelSubmit="labelSubmit"
         :labelCancel="labelCancel"

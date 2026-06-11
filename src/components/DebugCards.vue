@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useBoardStore } from '~/store/boardstore'
-import Dialog from '~/components/Dialog.vue'
-import Button from '~/components/Button.vue'
+import DialogBox from '~/components/DialogBox.vue'
+import VBtn from '~/components/VBtn.vue'
 
 const props = defineProps({
   boardId: { type: String, required: true },
@@ -20,13 +20,12 @@ const deleteList = () => {
 </script>
 
 <template>
-  <Dialog
-    :fixed="true"
-    title="debug"
+  <DialogBox
     v-if="isOpen"
-    @close="isOpen = false"
-    class="w-60% min-h-80vh z-99 bg-slate-2">
-    <div class="bg-slate-4 relative p-2 h-full">
+    title="debug"
+    class="fixed z-99 min-h-80vh w-60% bg-slate-2"
+    @close="isOpen = false">
+    <div class="relative h-full bg-slate-4 p-2">
       <div class="debug-border">
         <div><strong>ID: </strong>{{ board.id }}</div>
         <div><strong>name: </strong>{{ board.name }}</div>
@@ -38,8 +37,8 @@ const deleteList = () => {
         <summary>lists</summary>
         <details v-for="(list, i) in board.lists" :key="i">
           <summary>{{ list.title }} | {{ list.id }}</summary>
-          <ul class="debug-list" v-if="list.cardIds.length > 0">
-            <li v-for="cardId in list.cardIds">
+          <ul v-if="list.cardIds.length > 0" class="debug-list">
+            <li v-for="cardId in list.cardIds" :key="cardId">
               <strong>{{ board.cards[cardId].title }}</strong> | {{ cardId }}
             </li>
           </ul>
@@ -49,7 +48,7 @@ const deleteList = () => {
       <details>
         <summary>cards</summary>
         <ul class="debug-list">
-          <li v-for="card in board.cards">
+          <li v-for="card in board.cards" :key="card.id">
             <strong>{{ card.title }}</strong> | {{ card.id }}
           </li>
         </ul>
@@ -58,15 +57,15 @@ const deleteList = () => {
       <div class="debug-border">
         <div>
           <label for="list-id-delete">delete list by id: </label>
-          <input id="list-id-delete" type="text" class="mr-2" v-model="listIdToDelete" />
-          <Button @click="deleteList">delete list</Button>
+          <input id="list-id-delete" v-model="listIdToDelete" type="text" class="mr-2" />
+          <VBtn @click="deleteList">delete list</VBtn>
         </div>
       </div>
     </div>
-  </Dialog>
+  </DialogBox>
 
   <button
-    class="rounded-sm bg-cyan-400 px2 py1 absolute bottom-5 right-5 z-99 text-4"
+    class="absolute bottom-5 right-5 z-99 rounded-sm bg-cyan-400 px2 py1 text-4"
     @click="isOpen = !isOpen">
     debug
   </button>

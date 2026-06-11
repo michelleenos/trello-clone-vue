@@ -77,25 +77,29 @@ function drop(e: DragEvent) {
 </script>
 
 <template>
-  <div
-    v-for="(id, i) in listOrder"
-    class="relative mx-a w-69 rounded-md"
-    :key="id"
-    :data-pos="i"
-    @dragover="dragOver"
-    @dragleave="dragLeave"
-    @drop="drop">
-    <div
-      class="list-inner cursor-grab"
-      draggable="true"
-      :id="`list-${id}`"
-      :data-pos="i"
-      @dragstart="dragStart"
-      @dragend="dragEnd">
-      <slot name="listItem" :listId="id" :i="i"></slot>
+  <div class="content-wrap relative h-full max-h-full w-full overflow-x-auto">
+    <div class="grid grid-flow-col h-full max-h-full justify-start gap-x-4 py-2">
+      <div
+        v-for="(id, i) in listOrder"
+        :key="id"
+        class="relative mx-a w-72 rounded-md bg-(light1 op20) hover:bg-op10"
+        :data-pos="i"
+        @dragover="dragOver"
+        @dragleave="dragLeave"
+        @drop="drop">
+        <div
+          :id="`list-${id}`"
+          class="list-inner h-full cursor-grab px2"
+          draggable="true"
+          :data-pos="i"
+          @dragstart="dragStart"
+          @dragend="dragEnd">
+          <slot name="listItem" :listId="id" :i="i"></slot>
+        </div>
+      </div>
+      <slot name="lastCol"></slot>
     </div>
   </div>
-  <slot name="lastCol"></slot>
 </template>
 
 <style scoped>

@@ -12,15 +12,9 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --topbar-height: 50px;
-
   --brand: #401ca5;
   --brand-hover: #32128a;
   --brand-light: #9c8cc9;
-}
-
-body {
-  @apply text-ink min-h-screen m0 text-base;
 }
 
 .content-wrap {
@@ -42,13 +36,12 @@ button {
 
 input[type='text'],
 textarea {
-  @apply bg-slate-1 border-gray-3 border-1 px-2 py-1 text-4 rounded-sm transition-all;
-  @apply dark:bg-slate-1 dark:bg-opacity-10 dark:text-slate-1 dark:border-gray-5;
-}
+  @apply transition-all;
+  @apply outline-(offset-1 2 );
+  @apply border-(1 gray-3) px2 py1 text-4 rounded-sm bg-slate-1 text-sm;
+  @apply dark:(bg-slate-1 bg-op10 text-slate-1 border-gray-5);
 
-input[type='text']:focus,
-textarea:focus {
-  @apply outline-3 outline-solid outline-transparent shadow-sm;
+  @apply focus:(outline-(brand solid) shadow-sm);
 }
 
 textarea.input {
@@ -60,17 +53,6 @@ button,
 .btn {
   @apply cursor-pointer;
 }
-
-/* a {
-  @apply text-rose-6 hover:bg-amber-2 focus:bg-amber-2;
-} */
-
-/* a:focus,
-button:focus,
-input:focus,
-.btn:focus {
-  @apply outline-2 outline-pink-5 outline-solid;
-} */
 
 .text-error {
   @apply text-red text-xs;

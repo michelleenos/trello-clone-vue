@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Dialog from '~/components/Dialog.vue'
+import DialogBox from '~/components/DialogBox.vue'
 import DialogShade from '~/components/DialogShade.vue'
 import { useUserStore } from '~/store/userstore'
 import TextEditable from '~/components/TextEditable.vue'
-import Button from '~/components/Button.vue'
 
 const profileOpen = ref(false)
 
@@ -20,18 +19,18 @@ const profileBtn = () => {
 </script>
 
 <template>
-  <div class="w-full bg-light-5 bg-op-50 backdrop-blur-2xl z-99 h-14" v-bind="$attrs">
-    <div class="content-wrap flex items-center justify-between h-full">
-      <RouterLink class="font-medium inline-flex gap-2" to="/">
+  <div class="z-99 h-14 w-full bg-light-5 bg-op-50 backdrop-blur-2xl" v-bind="$attrs">
+    <div class="content-wrap h-full flex items-center justify-between">
+      <RouterLink class="inline-flex gap-2 font-medium" to="/">
         <span
-          class="inline-block bg-gradient-from-brandPink bg-gradient-to-brand w-5 h-5 bg-gradient-radial bg-gradient-to-bl rounded self-center"></span>
+          class="inline-block h-5 w-5 self-center rounded bg-gradient-from-brandPink bg-gradient-to-brand bg-gradient-radial bg-gradient-to-bl"></span>
         <span class="inline-block lh-tight">Trello Clone</span>
       </RouterLink>
       <!-- <Button linkTo="/" label="TRELLO CLONE" size="md" shape="rounded" /> -->
       <!-- <router-link to="/" class="topbar-btn"> TRELLO CLONE </router-link> -->
 
       <button
-        class="border-slate-3 w-10 h-10 border-1 rounded-full text-center inline-flex items-center justify-center"
+        class="h-10 w-10 inline-flex items-center justify-center border-1 border-slate-3 rounded-full text-center"
         aria-label="Your Profile"
         @click="profileBtn">
         <div class="i-carbon:person"></div>
@@ -39,7 +38,7 @@ const profileBtn = () => {
     </div>
   </div>
   <DialogShade v-if="profileOpen">
-    <Dialog @close="profileOpen = false">
+    <DialogBox @close="profileOpen = false">
       <template #title>
         <h2>Your Profile</h2>
       </template>
@@ -49,10 +48,10 @@ const profileBtn = () => {
         <TextEditable
           class="inline-block"
           :text="user.name"
-          @updateText="changeUserName"
-          placeholder="Your Name" />
+          placeholder="Your Name"
+          @update-text="changeUserName" />
       </div>
-    </Dialog>
+    </DialogBox>
   </DialogShade>
 </template>
 

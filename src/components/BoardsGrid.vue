@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
 import { useBoardStore } from '~/store/boardstore'
 import { useUserStore } from '~/store/userstore'
 import InputForm from '~/components/InputForm.vue'
-import Dialog from '~/components/Dialog.vue'
+import DialogBox from '~/components/DialogBox.vue'
 import DialogShade from '~/components/DialogShade.vue'
 import { ref, nextTick, useTemplateRef } from 'vue'
 import BoardCard from './BoardCard.vue'
@@ -46,19 +45,20 @@ const onCreateBoardSuccess = (newBoardId: string) => {
       :linkTo="`board/${board.id}`">
     </BoardCard>
 
-    <BoardCard @click="openForm" ref="showFormButton" name="Create Board" :ghost="true"></BoardCard>
+    <BoardCard ref="showFormButton" name="Create Board" :ghost="true" @click="openForm"></BoardCard>
 
     <transition name="fade" @after-leave="onDialogLeave">
       <DialogShade v-if="showNewBoardForm">
-        <Dialog title="Create Board" :focus-on-mount="false" @close="closeForm">
+        <DialogBox title="Create Board" :focus-on-mount="false" @close="closeForm">
           <InputForm
-            input-label="New Board Title"
-            input-id="newname"
+            class="p4"
+            inputLabel="New Board Title"
+            inputId="newname"
             :focus-on-mount="true"
             @submit="(newBoardName) => boardStore.newBoard(userStore.id, newBoardName)"
             @submit-success="onCreateBoardSuccess"
             @cancel="closeForm" />
-        </Dialog>
+        </DialogBox>
       </DialogShade>
     </transition>
   </div>

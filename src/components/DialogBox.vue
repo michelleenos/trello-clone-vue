@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref, onBeforeUnmount } from 'vue'
-import Button from './Button.vue'
+import Button from './VBtn.vue'
 
 defineEmits(['close'])
 
@@ -40,47 +40,27 @@ onBeforeUnmount(() => {
 
 <template>
   <div
-    :class="fixed ? 'dialog dialog-fixed' : 'dialog'"
+    ref="el"
     v-click-outside="() => $emit('close')"
-    @keyup.esc="() => $emit('close')"
+    class="grid grid-rows-[min-content_1fr] max-h-[90vh] min-w-sm bg-white"
     tabIndex="-1"
-    ref="el">
+    @keyup.esc="() => $emit('close')">
     <Button
       icon="close"
-      @click.native="$emit('close')"
-      class="close"
+      class="absolute right-1 top-1 text-white"
       color="flat-light"
       label="Close Dialog"
       :showText="false"
       size="sm"
-      shape="circle" />
-    <div class="dialog-title">
+      shape="circle"
+      @click="$emit('close')" />
+    <div class="mb0 border-b-1 bg-(slate-9 op90) p4 text-gray-1">
       <slot name="title">
         <h2 v-if="title">{{ title }}</h2>
       </slot>
     </div>
-    <div class="dialog-content">
+    <div class="h-full overflow-auto">
       <slot></slot>
     </div>
   </div>
 </template>
-
-<style scoped>
-.dialog {
-  @apply min-w-sm bg-white relative grid;
-  grid-template-rows: min-content 1fr;
-  max-height: 90vh;
-}
-
-.close {
-  @apply absolute top-1 right-1 text-white;
-}
-
-.dialog-title {
-  @apply mb-0 p4 border-b-1 border-slate-900 bg-slate-9 bg-opacity-90 text-gray-1;
-}
-
-.dialog-content {
-  @apply overflow-auto h-full relative;
-}
-</style>
