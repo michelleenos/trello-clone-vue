@@ -6,6 +6,8 @@ import TextEditable from '~/components/TextEditable.vue'
 import InputForm from '~/components/InputForm.vue'
 import DeleteWithConfirm from '~/components/DeleteWithConfirm.vue'
 
+// TODO fix vertical overflow with long list
+
 const {
   deleteListFromBoard,
   moveCardWithinList,

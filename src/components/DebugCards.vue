@@ -65,7 +65,7 @@ const deleteList = () => {
   </DialogBox>
 
   <button
-    class="absolute bottom-5 right-5 z-99 rounded-sm bg-cyan-400 px2 py1 text-4"
+    class="absolute bottom-3 right-5 z-99 rounded-sm bg-cyan-400 px2 py1 text-4"
     @click="isOpen = !isOpen">
     debug
   </button>

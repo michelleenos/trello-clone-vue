@@ -23,7 +23,7 @@ const userName = computed(() => userStore.name)
 
 <template>
   <router-view :boardId="id"></router-view>
-  <DebugCards :boardId="id" />
+
   <div class="relative grid grid-cols-[100%] grid-rows-[auto_1fr] max-w-full w-full">
     <div class="content-wrap relative max-w-full w-full">
       <BoardTitle class="mb-8 mt-8" :boardId="id" :userName="userName" :boardTitle="board.name" />

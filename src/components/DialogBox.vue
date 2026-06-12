@@ -42,21 +42,21 @@ onBeforeUnmount(() => {
   <div
     ref="el"
     v-click-outside="() => $emit('close')"
-    class="grid grid-rows-[min-content_1fr] max-h-[90vh] min-w-sm bg-white"
+    class="grid grid-rows-[min-content_1fr] max-h-[90vh] min-w-sm overflow-hidden rounded-md bg-light-2 shadow-lg relative"
     tabIndex="-1"
     @keyup.esc="() => $emit('close')">
     <Button
       icon="close"
-      class="absolute right-1 top-1 text-white"
-      color="flat-light"
+      class="absolute right-1 top-1 z-99"
+      color="flat-dark"
       label="Close Dialog"
       :showText="false"
       size="sm"
       shape="circle"
       @click="$emit('close')" />
-    <div class="mb0 border-b-1 bg-(slate-9 op90) p4 text-gray-1">
+    <div class="border-(b-1 coolgray-2) bg-(coolgray-1) p-4">
       <slot name="title">
-        <h2 v-if="title">{{ title }}</h2>
+        <h2 v-if="title" class="text-lg font-600">{{ title }}</h2>
       </slot>
     </div>
     <div class="h-full overflow-auto">

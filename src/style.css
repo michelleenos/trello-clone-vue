@@ -37,11 +37,11 @@ button {
 input[type='text'],
 textarea {
   @apply transition-all;
-  @apply outline-(offset-1 2 );
-  @apply border-(1 gray-3) px2 py1 text-4 rounded-sm bg-slate-1 text-sm;
+
+  @apply border-(1 gray-3) px2 py2 text-4 rounded-sm bg-slate-1 text-sm;
   @apply dark:(bg-slate-1 bg-op10 text-slate-1 border-gray-5);
 
-  @apply focus:(outline-(brand solid) shadow-sm);
+  @apply focus:(outline-1 outline-brand outline-solid shadow-md ring ring-4 ring-brand ring-op-20);
 }
 
 textarea.input {

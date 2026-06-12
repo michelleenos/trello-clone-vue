@@ -82,8 +82,8 @@ defineExpose({ show, hide })
       v-if="toggleable && !shown"
       ref="toggleBtn"
       :class="[
-        'w-full flex justify-center b-(1 slate-4 dashed) rounded-sm py-1 text-(sm brand) outline-(offset-1) transition-all',
-        'hover:(b-brand bg-brand bg-op10 shadow-md) focus:(outline-(2 solid brand))',
+        'w-full flex justify-center b-(1 slate-4 dashed) rounded-sm py-1 text-sm  outline-none transition-all',
+        'hover:(b-brand bg-brand bg-op10 text-brand shadow-md) focus-visible:(ring ring-4 ring-brand ring-op-20 border-solid border-brand)',
       ]"
       @click="show">
       <slot name="toggle">
@@ -92,13 +92,13 @@ defineExpose({ show, hide })
     </button>
 
     <form v-if="(toggleable && shown) || !toggleable" class="" @keyup.escape="onCancel">
-      <label v-if="inputLabel" :for="inputId">{{ inputLabel }}</label>
+      <label class="mb-2 block text-sm" v-if="inputLabel" :for="inputId">{{ inputLabel }}</label>
       <input
         :id="inputId"
         ref="input"
         v-model="inputText"
         type="text"
-        class="mb2 w-full py2 text-sm" />
+        class="mb-3 w-full py2 text-sm" />
       <div v-if="error" class="text-error">{{ error.message }}</div>
       <FormBtns
         :labelSubmit="labelSubmit"
